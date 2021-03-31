@@ -18,10 +18,6 @@ public class RandomWord {
             counter++;
             newWord = StdIn.readString();
 
-            if ("QUIT".equals(newWord)) {
-                break;
-            }
-
             if (StdRandom.bernoulli(1.0 / counter)) {
                 randomWord = newWord;
             }
