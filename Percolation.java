@@ -7,13 +7,16 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private WeightedQuickUnionUF conn;
+    private final WeightedQuickUnionUF conn;
     private boolean[][] grid;
-    private int len;
+    private final int len;
     private int count;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
+        if (n <= 0)
+            throw new IllegalArgumentException("size is 0 or less");
+
         len = n;
         conn = new WeightedQuickUnionUF(n * n + 2);
         grid = new boolean[n][n];
@@ -24,8 +27,15 @@ public class Percolation {
         return (row - 1) * len + col;
     }
 
+    private void checkBounds(int row, int col) {
+        if (row <= 0 || row > len || col > len || col <= 0)
+            throw new IllegalArgumentException("row or column index is out of bounds");
+    }
+
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
+        checkBounds(row, col);
+
         if (!grid[row - 1][col - 1]) {
             grid[row - 1][col - 1] = true;
             count++;
@@ -33,20 +43,22 @@ public class Percolation {
             if (row == 1) {
                 conn.union(0, col);
             }
-            else if (row == len) {
+
+            if (row == len) {
                 conn.union(len * len + 1, len * (len - 1) + col);
             }
 
-            if (isOpen(row - 1, col)) {
+
+            if (!(row == 1) && isOpen(row - 1, col)) {
                 conn.union(getConnId(row, col), getConnId(row - 1, col));
             }
-            if (isOpen(row + 1, col)) {
+            if (!(row == len) && isOpen(row + 1, col)) {
                 conn.union(getConnId(row, col), getConnId(row + 1, col));
             }
-            if (isOpen(row, col - 1)) {
+            if (!(col == 1) && isOpen(row, col - 1)) {
                 conn.union(getConnId(row, col), getConnId(row, col - 1));
             }
-            if (isOpen(row, col + 1)) {
+            if (!(col == len) && isOpen(row, col + 1)) {
                 conn.union(getConnId(row, col), getConnId(row, col + 1));
             }
         }
@@ -54,16 +66,13 @@ public class Percolation {
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        if (row < 1 || col < 1) {
-            return false;
-        }
-        else {
-            return grid[row - 1][col - 1];
-        }
+        checkBounds(row, col);
+        return grid[row - 1][col - 1];
     }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
+        checkBounds(row, col);
         return conn.find(0) == conn.find(getConnId(row, col));
     }
 
@@ -78,6 +87,6 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-
+        // to be added some testing methods
     }
 }
