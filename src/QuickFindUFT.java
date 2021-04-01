@@ -21,6 +21,26 @@ public class QuickFindUFT { // where "T" is for my test implementation
         }
     }
 
+    public static void main(String[] args) {
+        Stopwatch sw = new Stopwatch();
+        int size = StdIn.readInt();
+        QuickFindUFT union = new QuickFindUFT(size);
+        while (!StdIn.isEmpty()) {
+            int p = StdIn.readInt();
+            int q = StdIn.readInt();
+            if (union.connected(p, q)) {
+                continue;
+            }
+            union.union(p, q);
+        }
+        StdOut.println(size + " elements, " + union.count() + " components");
+        StdOut.println("Time elapsed: " + sw.elapsedTime());
+    }
+
+    public boolean connected(int p, int q) {
+        return find(p) == find(q);
+    }
+
     public void union(int p, int q) {
         int pComp = find(p);
         int qComp = find(q);
@@ -36,38 +56,11 @@ public class QuickFindUFT { // where "T" is for my test implementation
         }
     }
 
-    private int find(int p) {
-        return comp[p];
-    }
-
-    public boolean connected(int p, int q) {
-        return comp[p] == comp[q];
-    }
-
     public int count() {
         return count;
     }
 
-    public static void main(String[] args) {
-        Stopwatch sw = new Stopwatch();
-        int size = StdIn.readInt();
-        QuickFindUFT union = new QuickFindUFT(size);
-        while (!StdIn.isEmpty()) {
-            int p = StdIn.readInt();
-            int q = StdIn.readInt();
-            if (union.connected(p, q)) { continue; }
-            union.union(p, q);
-            // StdOut.println(p + "-" + q);
-        }
-        StdOut.println(size + " elements, " + union.count() + " components");
-        StdOut.println("Time elapsed: " + sw.elapsedTime());
+    private int find(int p) {
+        return comp[p];
     }
 }
-
-// largeUF.txt:
-// 1000000 elements, 6 components
-// Time elapsed: 703.731
-//
-// mediumUF.txt:
-// 625 elements, 3 components
-// Time elapsed: 0.136

@@ -24,38 +24,6 @@ public class WeightedQuickUnionUFT {
         }
     }
 
-    private int find(int p) {
-        while (p != comp[p]) {
-            p = comp[p];
-        }
-        return p;
-    }
-
-    public void union(int p, int q) {
-        int pComp = find(p);
-        int qComp = find(q);
-
-        if (pComp == qComp) { return; }
-
-        if (size[pComp] < size[qComp]) {
-            comp[pComp] = qComp;
-            size[pComp] += size[qComp];
-        } else {
-            comp[qComp] = pComp;
-            size[qComp] += size[pComp];
-        }
-
-        count--;
-    }
-
-    public boolean connected(int p, int q) {
-        return comp[p] == comp[q];
-    }
-
-    public int count() {
-        return count;
-    }
-
     public static void main(String[] args) {
         Stopwatch sw = new Stopwatch();
         int size = StdIn.readInt();
@@ -63,11 +31,47 @@ public class WeightedQuickUnionUFT {
         while (!StdIn.isEmpty()) {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
-            if (union.connected(p, q)) { continue; }
+            if (union.connected(p, q)) {
+                continue;
+            }
             union.union(p, q);
-            // StdOut.println(p + "-" + q);
         }
         StdOut.println(size + " elements, " + union.count() + " components");
         StdOut.println("Time elapsed: " + sw.elapsedTime());
+    }
+
+    public boolean connected(int p, int q) {
+        return find(p) == find(q);
+    }
+
+    public void union(int p, int q) {
+        int pComp = find(p);
+        int qComp = find(q);
+
+        if (pComp == qComp) {
+            return;
+        }
+
+        if (size[pComp] < size[qComp]) {
+            comp[pComp] = qComp;
+            size[qComp] += size[pComp];
+        }
+        else {
+            comp[qComp] = pComp;
+            size[pComp] += size[qComp];
+        }
+
+        count--;
+    }
+
+    public int count() {
+        return count;
+    }
+
+    private int find(int p) {
+        while (p != comp[p]) {
+            p = comp[p];
+        }
+        return p;
     }
 }

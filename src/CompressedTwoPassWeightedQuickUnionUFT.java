@@ -8,23 +8,27 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Stopwatch;
 
-public class QuickUnionUFT {
+public class CompressedTwoPassWeightedQuickUnionUFT {
     private int[] comp;
+    private int[] size;
     private int count;
 
-    public QuickUnionUFT(int n) {
+    public CompressedTwoPassWeightedQuickUnionUFT(int n) {
         comp = new int[n];
+        size = new int[n];
         count = n;
 
         for (int i = 0; i < n; i++) {
             comp[i] = i;
+            size[i] = 1;
         }
     }
 
     public static void main(String[] args) {
         Stopwatch sw = new Stopwatch();
         int size = StdIn.readInt();
-        QuickUnionUFT union = new QuickUnionUFT(size);
+        CompressedTwoPassWeightedQuickUnionUFT
+                union = new CompressedTwoPassWeightedQuickUnionUFT(size);
         while (!StdIn.isEmpty()) {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
@@ -49,7 +53,15 @@ public class QuickUnionUFT {
             return;
         }
 
-        comp[pComp] = qComp;
+        if (size[pComp] < size[qComp]) {
+            comp[pComp] = qComp;
+            size[qComp] += size[pComp];
+        }
+        else {
+            comp[qComp] = pComp;
+            size[pComp] += size[qComp];
+        }
+
         count--;
     }
 
@@ -58,9 +70,18 @@ public class QuickUnionUFT {
     }
 
     private int find(int p) {
-        while (p != comp[p]) {
-            p = comp[p];
+        int root = p;
+
+        while (root != comp[root]) {
+            root = comp[root];
         }
-        return p;
+
+        while (p != root) {
+            int nextP = comp[p];
+            comp[p] = root;
+            p = nextP;
+        }
+
+        return root;
     }
 }
