@@ -16,7 +16,8 @@ public class UnionStats {
 
     public static void main(String[] args) {
         StdOut.print(
-                "Provide starting number of elements/pairs and x2 steps to get stats (mean from " + ATTEMPTS
+                "Provide starting number of elements/pairs and x2 steps to get stats (mean from "
+                        + ATTEMPTS
                         + " attempts): \n> ");
         while (!StdIn.isEmpty()) {
             int elements = StdIn.readInt();
@@ -188,7 +189,7 @@ public class UnionStats {
 
             for (int j = 0; j < stats[i][0].length; j++) {
                 StdOut.printf("%8.4f", stats[i][0][j]);
-                if (j > 0) StdOut.printf("(x%3.1f)", stats[i][0][j]/previousStat);
+                if (j > 0) StdOut.printf("(x%3.1f)", stats[i][0][j] / previousStat);
                 previousStat = stats[i][0][j];
             }
             StdOut.println("");
