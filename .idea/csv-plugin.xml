@@ -17,6 +17,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/src/LinkedStack.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/Percolation.java">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/ResizingArrayStackOfStrings.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/src/UnionFind.java">
           <value>
             <Attribute>

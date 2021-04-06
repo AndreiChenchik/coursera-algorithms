@@ -32,7 +32,8 @@ public class UnionStats {
                     Stopwatch sw = new Stopwatch();
                     QuickFindUFT union = new QuickFindUFT(elements);
                     generatePairs(union);
-                    experiments[i] = sw.elapsedTime();
+                    double timer = sw.elapsedTime();
+                    experiments[i] = timer;
                 }
                 results = calcStats(experiments);
                 stats[0][0][j] = results[0];
@@ -44,7 +45,8 @@ public class UnionStats {
                     Stopwatch sw = new Stopwatch();
                     QuickUnionUFT union = new QuickUnionUFT(elements);
                     generatePairs(union);
-                    experiments[i] = sw.elapsedTime();
+                    double timer = sw.elapsedTime();
+                    experiments[i] = timer;
                 }
                 results = calcStats(experiments);
                 stats[1][0][j] = results[0];
@@ -56,7 +58,8 @@ public class UnionStats {
                     Stopwatch sw = new Stopwatch();
                     WeightedQuickUnionUFT union = new WeightedQuickUnionUFT(elements);
                     generatePairs(union);
-                    experiments[i] = sw.elapsedTime();
+                    double timer = sw.elapsedTime();
+                    experiments[i] = timer;
                 }
                 results = calcStats(experiments);
                 stats[2][0][j] = results[0];
@@ -70,7 +73,8 @@ public class UnionStats {
                     CompressedTwoPassWeightedQuickUnionUFT union
                             = new CompressedTwoPassWeightedQuickUnionUFT(elements);
                     generatePairs(union);
-                    experiments[i] = sw.elapsedTime();
+                    double timer = sw.elapsedTime();
+                    experiments[i] = timer;
                 }
                 results = calcStats(experiments);
                 stats[3][0][j] = results[0];
@@ -84,7 +88,8 @@ public class UnionStats {
                     CompressedOnePassWeightedQuickUnionUFT union
                             = new CompressedOnePassWeightedQuickUnionUFT(elements);
                     generatePairs(union);
-                    experiments[i] = sw.elapsedTime();
+                    double timer = sw.elapsedTime();
+                    experiments[i] = timer;
                 }
                 results = calcStats(experiments);
                 stats[4][0][j] = results[0];
@@ -103,7 +108,7 @@ public class UnionStats {
     private static void generatePairs(QuickFindUFT union) {
         int size = union.count();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size * 2; i++) {
             int p = StdRandom.uniform(size);
             int q = StdRandom.uniform(size);
             union.union(p, q);
@@ -122,7 +127,7 @@ public class UnionStats {
     private static void generatePairs(QuickUnionUFT union) {
         int size = union.count();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size * 2; i++) {
             int p = StdRandom.uniform(size);
             int q = StdRandom.uniform(size);
             union.union(p, q);
@@ -132,7 +137,7 @@ public class UnionStats {
     private static void generatePairs(WeightedQuickUnionUFT union) {
         int size = union.count();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size * 2; i++) {
             int p = StdRandom.uniform(size);
             int q = StdRandom.uniform(size);
             union.union(p, q);
@@ -142,7 +147,7 @@ public class UnionStats {
     private static void generatePairs(CompressedTwoPassWeightedQuickUnionUFT union) {
         int size = union.count();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size * 2; i++) {
             int p = StdRandom.uniform(size);
             int q = StdRandom.uniform(size);
             union.union(p, q);
@@ -152,7 +157,7 @@ public class UnionStats {
     private static void generatePairs(CompressedOnePassWeightedQuickUnionUFT union) {
         int size = union.count();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size * 2; i++) {
             int p = StdRandom.uniform(size);
             int q = StdRandom.uniform(size);
             union.union(p, q);

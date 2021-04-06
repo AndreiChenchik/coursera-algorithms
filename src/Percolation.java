@@ -8,8 +8,8 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private final WeightedQuickUnionUF conn;
-    private boolean[][] grid;
     private final int len;
+    private boolean[][] grid;
     private int count;
 
     // creates n-by-n grid, with all sites initially blocked
@@ -23,13 +23,8 @@ public class Percolation {
         count = 0;
     }
 
-    private int getConnId(int row, int col) {
-        return (row - 1) * len + col;
-    }
-
-    private void checkBounds(int row, int col) {
-        if (row <= 0 || row > len || col > len || col <= 0)
-            throw new IllegalArgumentException("row or column index is out of bounds");
+    public static void main(String[] args) {
+        // to be added some testing methods
     }
 
     // opens the site (row, col) if it is not open already
@@ -64,10 +59,19 @@ public class Percolation {
         }
     }
 
+    private void checkBounds(int row, int col) {
+        if (row <= 0 || row > len || col > len || col <= 0)
+            throw new IllegalArgumentException("row or column index is out of bounds");
+    }
+
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
         checkBounds(row, col);
         return grid[row - 1][col - 1];
+    }
+
+    private int getConnId(int row, int col) {
+        return (row - 1) * len + col;
     }
 
     // is the site (row, col) full?
@@ -84,9 +88,5 @@ public class Percolation {
     // does the system percolate?
     public boolean percolates() {
         return conn.find(0) == conn.find(len * len + 1);
-    }
-
-    public static void main(String[] args) {
-        // to be added some testing methods
     }
 }

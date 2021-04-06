@@ -31,6 +31,19 @@ public class PercolationStats {
         }
     }
 
+    // test client (see below)
+    public static void main(String[] args) {
+        int gridSize = Integer.parseInt(args[0]);
+        int numberOfExperiments = Integer.parseInt(args[1]);
+
+        PercolationStats experiment = new PercolationStats(gridSize, numberOfExperiments);
+
+        StdOut.printf("%-23s = %.16f\n", "mean", experiment.mean());
+        StdOut.printf("%-23s = %.16f\n", "stddev", experiment.stddev());
+        StdOut.printf("%-23s = [%.16f, %.16f]", "95% confidence interval",
+                      experiment.confidenceLo(), experiment.confidenceHi());
+    }
+
     // sample mean of percolation threshold
     public double mean() {
         return StdStats.mean(exp);
@@ -49,18 +62,5 @@ public class PercolationStats {
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
         return mean() + CONFIDENCE * stddev() / Math.sqrt(exp.length);
-    }
-
-    // test client (see below)
-    public static void main(String[] args) {
-        int gridSize = Integer.parseInt(args[0]);
-        int numberOfExperiments = Integer.parseInt(args[1]);
-
-        PercolationStats experiment = new PercolationStats(gridSize, numberOfExperiments);
-
-        StdOut.printf("%-23s = %.16f\n", "mean", experiment.mean());
-        StdOut.printf("%-23s = %.16f\n", "stddev", experiment.stddev());
-        StdOut.printf("%-23s = [%.16f, %.16f]", "95% confidence interval",
-                      experiment.confidenceLo(), experiment.confidenceHi());
     }
 }
