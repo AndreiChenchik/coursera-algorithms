@@ -88,24 +88,27 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         int elem = getRandomElement();
         Item item = queue[elem];
-        queue[elem] = null;
+
+        nextSlot--;
+        queue[elem] = queue[nextSlot];
+        queue[nextSlot] = null;
+
         size--;
         if (size > 0 && size == queue.length / 4) {
             resize(queue.length / 2);
         }
+
         return item;
     }
 
     private void resize(int capacity) {
         Item[] copy = (Item[]) new Object[capacity];
-        int nextCopySlot = 0;
-        for (int i = 0; i < queue.length; i++) {
-            if (queue[i] != null) {
-                copy[nextCopySlot++] = queue[i];
-            }
+
+        for (int i = 0; i < nextSlot; i++) {
+            copy[i] = queue[i];
         }
+
         queue = copy;
-        nextSlot = nextCopySlot;
     }
 
     // is the randomized queue empty?
@@ -120,8 +123,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // return a random item (but do not remove it)
     public Item sample() {
-        int elem = getRandomElement();
-        return queue[elem];
+        return queue[getRandomElement()];
     }
 
     // return an independent iterator over items in random order
@@ -130,12 +132,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (isEmpty()) {
             throw new NoSuchElementException("Queue is empty.");
         }
-        int item;
-        do {
-            item = StdRandom.uniform(queue.length);
-        } while (queue[item] == null);
-
-        return item;
+        return StdRandom.uniform(size);
     }
 
     public Iterator<Item> iterator() {
@@ -148,16 +145,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         RandomizedQueueIterator() {
             iterationQueue = (Item[]) new Object[size];
-            int randomItem;
 
-            for (int i = 0; i < queue.length; i++) {
-                if (queue[i] != null) {
-                    do {
-                        randomItem = StdRandom.uniform(size);
-                    } while (iterationQueue[randomItem] != null);
-                    iterationQueue[randomItem] = queue[i];
-                }
+            for (int i = 0; i < nextSlot; i++) {
+                iterationQueue[i] = queue[i];
             }
+
+            StdRandom.shuffle(iterationQueue);
         }
 
         public boolean hasNext() {

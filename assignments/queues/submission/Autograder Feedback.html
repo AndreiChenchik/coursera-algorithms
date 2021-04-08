@@ -25,9 +25,9 @@ Checkstyle:   <font color = #009900>PASSED</font>
 
 Correctness:  <font color = #009900>49/49 tests passed</font>
 Memory:       <font color = #009900>124/124 tests passed</font>
-Timing:       <font color = #029900>190/193 tests passed</font>
+Timing:       <font color = #009900>193/193 tests passed</font>
 
-Aggregate score: 99.69%
+Aggregate score: 100.00%
 [ Compilation: 5%, API: 5%, Style: 0%, Correctness: 60%, Timing: 10%, Memory: 20% ]
 </pre>
 
@@ -40,9 +40,9 @@ Aggregate score: 99.69%
 
 The following files were submitted:
 ----------------------------------
-4.7K Apr  8 08:51 Deque.java
- 767 Apr  8 08:51 Permutation.java
-5.6K Apr  8 08:51 RandomizedQueue.java
+4.7K Apr  8 14:41 Deque.java
+ 767 Apr  8 14:41 Permutation.java
+5.2K Apr  8 14:41 RandomizedQueue.java
 
 
 ********************************************************************************
@@ -62,14 +62,14 @@ RandomizedQueue.java:23: warning: [unchecked] unchecked cast
   found:    Object[]
   where Item is a type-variable:
     Item extends Object declared in class RandomizedQueue
-RandomizedQueue.java:100: warning: [unchecked] unchecked cast
+RandomizedQueue.java:105: warning: [unchecked] unchecked cast
         Item[] copy = (Item[]) new Object[capacity];
                                ^
   required: Item[]
   found:    Object[]
   where Item is a type-variable:
     Item extends Object declared in class RandomizedQueue
-RandomizedQueue.java:150: warning: [unchecked] unchecked cast
+RandomizedQueue.java:147: warning: [unchecked] unchecked cast
             iterationQueue = (Item[]) new Object[size];
                                       ^
   required: Item[]
@@ -456,22 +456,22 @@ Running 9 total tests.
 
 Test 1a: check formatting for sample inputs from assignment specification
   % java Permutation 3 &lt; distinct.txt
-  F
-  D
   B
+  G
+  H
 
   % java Permutation 3 &lt; distinct.txt
-  E
-  I
-  G
+  B
+  F
+  A
 
   % java Permutation 8 &lt; duplicates.txt
+  AA
+  BB
   BB
   BB
   CC
   BB
-  BB
-  AA
   BB
   CC
 
@@ -479,14 +479,14 @@ Test 1a: check formatting for sample inputs from assignment specification
 
 Test 1b: check formatting for other inputs
   % java Permutation 8 &lt; mediumTale.txt
-  the
-  was
-  it
-  best
-  the
-  the
-  foolishness
+  wisdom
   of
+  the
+  age
+  of
+  it
+  the
+  the
 
   % java Permutation 0 &lt; distinct.txt
   [no output]
@@ -1196,9 +1196,9 @@ Test 9a-9k: make n calls to addFirst()/addLast(); interleave n calls each to
 =&gt; passed        8193     0.00
 =&gt; passed       16385     0.00
 =&gt; passed       32769     0.00
-=&gt; passed       65537     0.00
+=&gt; passed       65537     0.01
 =&gt; passed      128001     0.01
-=&gt; passed      256001     0.01
+=&gt; passed      256001     0.02
 =&gt; passed      512001     0.03
 =&gt; passed     1024001     0.05
 ==&gt; 11/11 tests passed
@@ -1217,59 +1217,23 @@ Running 67 total tests.
 Test 1: make n calls to enqueue() followed by n calls to dequeue();
         count calls to StdRandom
   * n = 10
-    - dequeue() should call StdRandom at most once
-    - number of elementary StdRandom operations = 3
-    - failed enqueueing item 5 of 10
-
   * n = 100
-    - dequeue() should call StdRandom at most once
-    - number of elementary StdRandom operations = 4
-    - failed enqueueing item 8 of 100
-
   * n = 1000
-    - dequeue() should call StdRandom at most once
-    - number of elementary StdRandom operations = 2
-    - failed enqueueing item 31 of 1000
-
-==&gt; <font color = #990000><b>FAILED</b></font>
+==&gt; passed
 
 Test 2: make n calls to enqueue() follwed by n calls to sample();
         count calls to StdRandom
   * n = 10
-    - sample() should call StdRandom at most once
-    - number of elementary StdRandom operations = 2
-    - failed sampling item 3 of 10
-
   * n = 100
-    - sample() should call StdRandom at most once
-    - number of elementary StdRandom operations = 2
-    - failed sampling item 1 of 100
-
   * n = 1000
-    - sample() should call StdRandom at most once
-    - number of elementary StdRandom operations = 2
-    - failed sampling item 75 of 1000
-
-==&gt; <font color = #990000><b>FAILED</b></font>
+==&gt; passed
 
 Test 3: make n calls to enqueue() and iterate over the n items;
         count calls to StdRandom
   * n = 10
-    - iteration should call StdRandom() at most once per item
-    - number of items                             = 10
-    - number of elementary StdRandom() operations = 45
-
   * n = 100
-    - iteration should call StdRandom() at most once per item
-    - number of items                             = 100
-    - number of elementary StdRandom() operations = 737
-
   * n = 1000
-    - iteration should call StdRandom() at most once per item
-    - number of items                             = 1000
-    - number of elementary StdRandom() operations = 7356
-
-==&gt; <font color = #990000><b>FAILED</b></font>
+==&gt; passed
 
 Test 4a-k: make n calls to enqueue() followed by n calls to dequeue()
 
@@ -1281,11 +1245,11 @@ Test 4a-k: make n calls to enqueue() followed by n calls to dequeue()
 =&gt; passed        8192     0.00
 =&gt; passed       16384     0.00
 =&gt; passed       32768     0.00
-=&gt; passed       65536     0.01
+=&gt; passed       65536     0.00
 =&gt; passed      128000     0.01
 =&gt; passed      256000     0.01
-=&gt; passed      512000     0.03
-=&gt; passed     1024000     0.06
+=&gt; passed      512000     0.02
+=&gt; passed     1024000     0.03
 ==&gt; 11/11 tests passed
 
 
@@ -1344,8 +1308,8 @@ Test 7a-k: make n calls to enqueue() followed by n random calls to
 =&gt; passed       65536     0.00
 =&gt; passed      128000     0.01
 =&gt; passed      256000     0.02
-=&gt; passed      512000     0.05
-=&gt; passed     1024000     0.12
+=&gt; passed      512000     0.04
+=&gt; passed     1024000     0.10
 ==&gt; 11/11 tests passed
 
 
@@ -1360,11 +1324,11 @@ Test 8a-k: make n calls to enqueue() followed by n calls each to
 =&gt; passed        8192     0.00
 =&gt; passed       16384     0.00
 =&gt; passed       32768     0.00
-=&gt; passed       65536     0.01
-=&gt; passed      128000     0.02
-=&gt; passed      256000     0.06
-=&gt; passed      512000     0.14
-=&gt; passed     1024000     0.31
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.01
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.02
+=&gt; passed     1024000     0.04
 ==&gt; 11/11 tests passed
 
 
@@ -1379,14 +1343,14 @@ Test 9a-i: make 100 calls to enqueue; 99 calls to dequeue;
 =&gt; passed        4096     0.00
 =&gt; passed        8192     0.00
 =&gt; passed       16384     0.00
-=&gt; passed       32768     0.01
-=&gt; passed       65536     0.02
-=&gt; passed      128000     0.04
-=&gt; passed      256000     0.09
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.01
+=&gt; passed      128000     0.02
+=&gt; passed      256000     0.04
 ==&gt; 9/9 tests passed
 
 
-Total: 64/67 tests passed!
+Total: 67/67 tests passed!
 
 
 ================================================================
