@@ -7,7 +7,8 @@
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
-public class MergeSort<Item extends Comparable<Item>> {
+public class BottomUpMergeSort {
+
     public static void main(String[] args) {
         int length = 200;
         Double[] doubleArray = new Double[length];
@@ -29,26 +30,12 @@ public class MergeSort<Item extends Comparable<Item>> {
         int arraySize = array.length;
         Item[] auxArray = (Item[]) new Comparable[arraySize];
 
-        for (int i = 0; i < arraySize; i++) {
-            auxArray[i] = array[i];
+        for (int size = 1; size < arraySize; size *= 2) {
+            for (int lo = 0; lo < arraySize-size; lo += 2 * size) {
+                merge(array, auxArray,lo, lo+size-1, Math.min(lo + 2* size -1, arraySize -1));
+            }
         }
 
-        sort(array, auxArray, 0, arraySize - 1);
-
-    }
-
-
-    public static <Item extends Comparable<Item>> void sort(Item[] array, Item[] aux, int lo,
-                                                            int hi) {
-        if (hi <= lo) {
-            return;
-        }
-
-        int mid = lo + (hi - lo) / 2;
-        sort(aux, array, lo, mid);
-        sort(aux, array, mid + 1, hi);
-
-        merge(array, aux, lo, mid, hi);
     }
 
 
@@ -66,26 +53,30 @@ public class MergeSort<Item extends Comparable<Item>> {
         return first.compareTo(second) < 0;
     }
 
-    private static <Item extends Comparable<Item>> void merge(Item[] aux, Item[] array, int lo,
+    private static <Item extends Comparable<Item>> void merge(Item[] array, Item[] aux, int lo,
                                                               int mid, int hi) {
         assert isSorted(array, lo, mid);
         assert isSorted(array, mid + 1, hi);
+
+        for (int i = lo; i <= hi; i++) {
+            aux[i] = array[i];
+        }
 
         int i = lo;
         int j = mid + 1;
 
         for (int k = lo; k <= hi; k++) {
             if (i > mid) {
-                aux[k] = array[j++];
+                array[k] = aux[j++];
             }
             else if (j > hi) {
-                aux[k] = array[i++];
+                array[k] = aux[i++];
             }
-            else if (less(array[j], array[i])) {
-                aux[k] = array[j++];
+            else if (less(aux[j], aux[i])) {
+                array[k] = aux[j++];
             }
             else {
-                aux[k] = array[i++];
+                array[k] = aux[i++];
             }
         }
     }
