@@ -13,14 +13,6 @@ public class Employee implements Comparable<Employee> {
         this.salary = salary;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public int getSalary() {
-        return this.salary;
-    }
-
     public static void main(String[] args) {
         Employee employeeOne = new Employee(100);
         Employee employeeTwo = new Employee(150);
@@ -29,5 +21,13 @@ public class Employee implements Comparable<Employee> {
 
     public int compareTo(Employee that) {
         return Integer.compare(this.salary, that.salary);
+    }
+
+    public int getSalary() {
+        return this.salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 }
